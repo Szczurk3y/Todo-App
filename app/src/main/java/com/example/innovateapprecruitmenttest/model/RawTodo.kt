@@ -3,7 +3,7 @@ package com.example.innovateapprecruitmenttest.model
 import com.squareup.moshi.Json
 import java.util.*
 
-data class TodoResponse(
+data class RawTodo(
     val id: String,
     val title: String,
     val description: String?,
