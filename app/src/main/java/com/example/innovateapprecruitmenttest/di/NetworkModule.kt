@@ -8,13 +8,14 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.dsl.module
 import retrofit2.Retrofit
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.moshi.MoshiConverterFactory
 import java.util.concurrent.TimeUnit
 
-private const val BASE_URL = "https://todo.penhr.pl/api/todos"
+private const val BASE_URL = "https://todo.penhr.pl/api/todos/"
 const val API_KEY = "e8efdb2cb52c5a868cb2f0265a8310225df7"
 
-val networkModule = module {
+fun networkModule() = module {
     // Creates logging interceptor
     single {
         val interceptor = HttpLoggingInterceptor()
@@ -34,20 +35,24 @@ val networkModule = module {
         client.build()
     }
 
+    // Creates moshi json adapter
     single {
         Moshi.Builder()
             .add(KotlinJsonAdapterFactory())
             .build()
     }
 
+    // Builds retrofit
     single {
         Retrofit.Builder()
             .baseUrl(BASE_URL)
             .addConverterFactory(MoshiConverterFactory.create(get()))
+            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .client(get())
             .build()
     }
 
+    // Creates retrofit instance of TodoAPI
     single {
         get<Retrofit>().create(TodoAPI::class.java)
     }

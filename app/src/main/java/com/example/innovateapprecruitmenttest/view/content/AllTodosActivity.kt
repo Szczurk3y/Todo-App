@@ -4,14 +4,23 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProviders
 import com.example.innovateapprecruitmenttest.R
+import com.example.innovateapprecruitmenttest.viewmodel.AllTodosViewModel
 
 class AllTodosActivity : AppCompatActivity() {
+
+    private lateinit var viewModel: AllTodosViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_alltodos)
         setSupportActionBar(findViewById(R.id.toolbar))
+
+        viewModel = ViewModelProviders.of(this).get(AllTodosViewModel::class.java)
+
+        viewModel.getTodos()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
