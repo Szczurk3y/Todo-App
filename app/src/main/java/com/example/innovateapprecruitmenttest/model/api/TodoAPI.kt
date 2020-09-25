@@ -1,6 +1,6 @@
 package com.example.innovateapprecruitmenttest.model.api
 
-import com.example.innovateapprecruitmenttest.model.room.TodoResponse
+import com.example.innovateapprecruitmenttest.model.TodoResponse
 import io.reactivex.Observable
 import retrofit2.Response
 import retrofit2.http.*
