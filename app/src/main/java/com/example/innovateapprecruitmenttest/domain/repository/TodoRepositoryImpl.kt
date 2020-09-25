@@ -1,31 +1,47 @@
 package com.example.innovateapprecruitmenttest.domain.repository
 
+import android.util.Log
 import androidx.lifecycle.LiveData
+import com.example.innovateapprecruitmenttest.di.API_KEY
 import com.example.innovateapprecruitmenttest.model.RawTodo
 import com.example.innovateapprecruitmenttest.model.api.TodoAPI
 import com.example.innovateapprecruitmenttest.model.room.TodoDao
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.schedulers.Schedulers
+import kotlinx.coroutines.withContext
 import org.koin.core.KoinComponent
 import org.koin.core.inject
 
-// Inject in AppModule
+// Injected in AppModule
 class TodoRepositoryImpl(
     private val todoApi: TodoAPI,
     private val todoDao: TodoDao
 ): TodoRepository {
 
-    override fun getAllTodos(): LiveData<List<RawTodo>> {
+    override suspend fun getTodos(): List<RawTodo> {
         /**
          * If there's no internet connection, default to the cached values.
          * Otherwise propagate the error.
          * */
-        TODO()
+        val cachedTodos = todoDao.getSavedTodos()
+        val apiTodos = try {
+            todoApi.getAllTodos(API_KEY).todos
+        } catch (error: Throwable) {
+            null
+        }
+        if (apiTodos != null) {
+            todoDao.insertAllTodos(apiTodos)
+        }
+
+        return apiTodos ?: cachedTodos
     }
 
-    override fun getTodo(): LiveData<RawTodo> {
+    override suspend fun getTodo(id: String): RawTodo {
         TODO("Not yet implemented")
     }
 
-    override suspend fun insertTodo() {
+    override suspend fun insertAllTodos() {
         TODO("Not yet implemented")
     }
 

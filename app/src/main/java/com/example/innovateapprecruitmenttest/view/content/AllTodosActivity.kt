@@ -1,9 +1,11 @@
 package com.example.innovateapprecruitmenttest.view.content
 
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProviders
 import com.example.innovateapprecruitmenttest.R
@@ -12,16 +14,20 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.KoinComponent
 import org.koin.core.inject
 
-class AllTodosActivity : AppCompatActivity(), KoinComponent {
+class AllTodosActivity: AppCompatActivity(), KoinComponent {
 
-    private val viewmodel: ViewModel by viewModel<AllTodosViewModel>()
+    private val viewmodel: AllTodosViewModel by viewModel<AllTodosViewModel>() // Injecting view model
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_alltodos)
         setSupportActionBar(findViewById(R.id.toolbar))
 
+        viewmodel.todosLiveData.observe(this, Observer { todos ->
+            Log.i("Api todos:", todos.toString())
+        })
 
+        viewmodel.getTodos()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

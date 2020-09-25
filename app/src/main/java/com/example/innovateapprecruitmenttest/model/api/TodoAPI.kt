@@ -8,7 +8,7 @@ import retrofit2.http.*
 interface TodoAPI {
     @GET(".") // BASE_URL == GET TODOS API so let's keep it blank
     @Headers("Content-Type: application/json")
-    fun getAllTodos(@Header("Authorization") token: String): Observable<Response<TodoResponse>>
+    suspend fun getAllTodos(@Header("Authorization") token: String): TodoResponse
 
     @POST("")
     fun insertTodo(@Header("Authorization") token: String, @Query("title") title: String): Observable<Response<String>> // since post request returns only id, let's keep it simply

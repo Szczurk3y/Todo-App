@@ -16,8 +16,8 @@ interface TodoDao {
     suspend fun updateTodo(todo: RawTodo)
 
     @Query("SELECT * FROM todo_table WHERE id = :id")
-    fun getTodo(id: String): LiveData<RawTodo> // returning type of LiveData cannot be suspend function
+    suspend fun getTodo(id: String): RawTodo
 
     @Query("SELECT * FROM todo_table")
-    fun getAllTodos(): LiveData<List<RawTodo>> // returning type of LiveData cannot be suspend function
+    suspend fun getSavedTodos(): List<RawTodo>
 }
