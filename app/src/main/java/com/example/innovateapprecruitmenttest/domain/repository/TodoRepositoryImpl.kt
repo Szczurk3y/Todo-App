@@ -7,12 +7,13 @@ import com.example.innovateapprecruitmenttest.model.room.TodoDao
 import org.koin.core.KoinComponent
 import org.koin.core.inject
 
+// Inject in AppModule
 class TodoRepositoryImpl(
     private val todoApi: TodoAPI,
     private val todoDao: TodoDao
-): TodoRepository, KoinComponent {
+): TodoRepository {
 
-    override suspend fun getAllTodos(): LiveData<List<RawTodo>> {
+    override fun getAllTodos(): LiveData<List<RawTodo>> {
         /**
          * If there's no internet connection, default to the cached values.
          * Otherwise propagate the error.
@@ -20,7 +21,7 @@ class TodoRepositoryImpl(
         TODO()
     }
 
-    override suspend fun getTodo(): LiveData<RawTodo> {
+    override fun getTodo(): LiveData<RawTodo> {
         TODO("Not yet implemented")
     }
 

@@ -8,19 +8,20 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProviders
 import com.example.innovateapprecruitmenttest.R
 import com.example.innovateapprecruitmenttest.viewmodel.AllTodosViewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.core.KoinComponent
+import org.koin.core.inject
 
-class AllTodosActivity : AppCompatActivity() {
+class AllTodosActivity : AppCompatActivity(), KoinComponent {
 
-    private lateinit var viewModel: AllTodosViewModel
+    private val viewmodel: ViewModel by viewModel<AllTodosViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_alltodos)
         setSupportActionBar(findViewById(R.id.toolbar))
 
-        viewModel = ViewModelProviders.of(this).get(AllTodosViewModel::class.java)
 
-        viewModel.getTodos()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

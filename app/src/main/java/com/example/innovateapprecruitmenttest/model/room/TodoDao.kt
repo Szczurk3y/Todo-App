@@ -7,17 +7,17 @@ import com.example.innovateapprecruitmenttest.model.RawTodo
 @Dao
 interface TodoDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertAllTodos(todos: List<RawTodo>)
+    suspend fun insertAllTodos(todos: List<RawTodo>)
 
     @Delete
-    fun deleteTodo(todo: RawTodo)
+    suspend fun deleteTodo(todo: RawTodo)
 
     @Update
-    fun updateTodo(todo: RawTodo)
+    suspend fun updateTodo(todo: RawTodo)
 
     @Query("SELECT * FROM todo_table WHERE id = :id")
-    fun getTodo(id: String): LiveData<RawTodo>
+    fun getTodo(id: String): LiveData<RawTodo> // returning type of LiveData cannot be suspend function
 
     @Query("SELECT * FROM todo_table")
-    fun getAllTodos(): LiveData<List<RawTodo>>
+    fun getAllTodos(): LiveData<List<RawTodo>> // returning type of LiveData cannot be suspend function
 }

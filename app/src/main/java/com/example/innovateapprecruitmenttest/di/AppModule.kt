@@ -4,6 +4,7 @@ import com.example.innovateapprecruitmenttest.domain.repository.TodoRepositoryIm
 import com.example.innovateapprecruitmenttest.model.api.TodoAPI
 import com.example.innovateapprecruitmenttest.model.room.TodosDatabase
 import org.koin.android.ext.koin.androidContext
+import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
 fun appModule() = module {
