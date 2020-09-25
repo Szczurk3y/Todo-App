@@ -11,7 +11,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".view.content.AllTodosActivity"
+            android:name=".view.content.SplashActivity"
             android:label="@string/app_title"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>

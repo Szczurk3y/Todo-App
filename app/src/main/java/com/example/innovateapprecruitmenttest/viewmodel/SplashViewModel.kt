@@ -1,4 +1,6 @@
 package com.example.innovateapprecruitmenttest.viewmodel
 
-class SplashViewModel {
+import androidx.lifecycle.ViewModel
+
+class SplashViewModel: ViewModel() {
 }
