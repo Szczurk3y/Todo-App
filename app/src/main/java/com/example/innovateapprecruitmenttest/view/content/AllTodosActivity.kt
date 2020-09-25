@@ -16,18 +16,11 @@ import org.koin.core.inject
 
 class AllTodosActivity: AppCompatActivity(), KoinComponent {
 
-    private val viewmodel: AllTodosViewModel by viewModel<AllTodosViewModel>() // Injecting view model
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_alltodos)
         setSupportActionBar(findViewById(R.id.toolbar))
-
-        viewmodel.todosLiveData.observe(this, Observer { todos ->
-            Log.i("Api todos:", todos.toString())
-        })
-
-        viewmodel.getTodos()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

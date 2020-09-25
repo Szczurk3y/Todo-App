@@ -13,13 +13,16 @@
         <activity
             android:name=".view.content.SplashActivity"
             android:label="@string/app_title"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".view.content.AllTodosActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>

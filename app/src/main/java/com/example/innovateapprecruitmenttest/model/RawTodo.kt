@@ -19,4 +19,8 @@ data class RawTodo (
     val priority: Boolean,
     @Json(name = "inserted_at") val insertedAt: String,
     @Json(name = "updated_at") val updatedAt: String
-): Parcelable
+): Parcelable {
+    companion object {
+        const val TODO_KEY = "TODO_KEY"
+    }
+}

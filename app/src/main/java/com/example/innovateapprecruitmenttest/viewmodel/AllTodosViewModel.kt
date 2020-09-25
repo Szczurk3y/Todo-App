@@ -19,29 +19,6 @@ import kotlinx.coroutines.launch
 import org.koin.core.KoinComponent
 import org.koin.core.inject
 
-class AllTodosViewModel(private val todoRepository: TodoRepository): ViewModel() {
-
-    val todosLiveData = MutableLiveData<List<RawTodo>>()
-
-    private val coroutineExceptionHandler = CoroutineExceptionHandler { coroutineContext, throwable ->
-        throwable.printStackTrace()
-    }
-
-    fun getTodos() {
-        viewModelScope.launch(coroutineExceptionHandler) {
-            delay(500)
-            val result = kotlin.runCatching { todoRepository.getTodos() }
-
-            result.onSuccess { todos ->
-                todosLiveData.postValue(todos)
-            }.onFailure { error ->
-                handleError(error)
-            }
-        }
-    }
-
-    private fun handleError(error: Throwable) {
-        error.printStackTrace()
-    }
+class AllTodosViewModel: ViewModel() {
 
 }
