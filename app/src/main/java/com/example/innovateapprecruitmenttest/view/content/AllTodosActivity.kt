@@ -8,7 +8,11 @@ import android.view.MenuItem
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.innovateapprecruitmenttest.R
+import com.example.innovateapprecruitmenttest.model.Adapter.TodosAdapter
+import com.example.innovateapprecruitmenttest.model.RawTodo
 import com.example.innovateapprecruitmenttest.viewmodel.AllTodosViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.KoinComponent
@@ -21,6 +25,17 @@ class AllTodosActivity: AppCompatActivity(), KoinComponent {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_alltodos)
         setSupportActionBar(findViewById(R.id.toolbar))
+
+        val recyclerView: RecyclerView = findViewById(R.id.recyclerView)
+        recyclerView.layoutManager = LinearLayoutManager(this)
+
+        val adapter = TodosAdapter { todo, position, view ->
+            Log.i("Todo clicked:", todo.title)
+        }
+
+        adapter.submitList(intent.getParcelableArrayListExtra<RawTodo>(RawTodo.TODO_KEY)?.toMutableList())
+
+        recyclerView.adapter = adapter
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
