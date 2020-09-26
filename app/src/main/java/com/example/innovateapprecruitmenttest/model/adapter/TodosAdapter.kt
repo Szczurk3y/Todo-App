@@ -1,10 +1,8 @@
-package com.example.innovateapprecruitmenttest.model.Adapter
+package com.example.innovateapprecruitmenttest.model.adapter
 
-import android.app.LauncherActivity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter

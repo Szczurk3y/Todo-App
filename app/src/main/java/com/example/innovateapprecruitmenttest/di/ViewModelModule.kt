@@ -11,4 +11,5 @@ import org.koin.dsl.module
 
 fun viewModelModule() = module {
     viewModel { SplashViewModel(get()) }
+    viewModel { AllTodosViewModel(get()) }
 }
