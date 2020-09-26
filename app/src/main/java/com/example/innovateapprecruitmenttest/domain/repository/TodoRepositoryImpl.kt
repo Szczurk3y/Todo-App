@@ -45,11 +45,11 @@ class TodoRepositoryImpl(
         TODO("Not yet implemented")
     }
 
-    override suspend fun deleteTodo() {
+    override suspend fun deleteTodo(todo: RawTodo) {
         TODO("Not yet implemented")
     }
 
-    override suspend fun updateTodo() {
-        TODO("Not yet implemented")
+    override suspend fun updateTodo(todo: RawTodo) {
+        todoDao.updateTodo(todo)
     }
 }

@@ -18,9 +18,7 @@ class SplashViewModel(private val todoRepository: TodoRepository): ViewModel() {
 
     fun getTodos() {
         viewModelScope.launch(coroutineExceptionHandler) {
-            delay(500)
             val result = kotlin.runCatching { todoRepository.getTodos() }
-
             result.onSuccess { todos ->
                 todosLiveData.postValue(todos)
             }.onFailure { error ->
