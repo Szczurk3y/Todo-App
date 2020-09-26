@@ -13,6 +13,5 @@ import com.example.innovateapprecruitmenttest.model.RawTodo
 class DetailsActivity: AppCompatActivity(R.layout.activity_details) {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
     }
 }
