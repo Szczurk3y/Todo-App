@@ -10,14 +10,35 @@ import com.example.innovateapprecruitmenttest.model.TodoListItem
 
 class AddEditTodoViewModel: ViewModel() {
     val todoLiveData = MutableLiveData<TodoListItem>()
+    val saveLiveData = MutableLiveData<Boolean>()
+
+    var title = ObservableField<String>("")
+    var description = ObservableField<String>("")
+    var priority = false
+
+    lateinit var todo: TodoListItem
 
 
-    fun saveDetails() {
+    fun saveTodo() {
+        Log.i("Save button", canSaveTodo().toString())
+        return if (canSaveTodo()) {
+            saveLiveData.postValue(true)
 
-//        todoLiveData.postValue(updatedTodo)
+        } else {
+            saveLiveData.postValue(false)
+        }
+    }
+
+    private fun canSaveTodo(): Boolean {
+        val title = this.title.get()
+        val description = this.description.get()
+        if (title != null && description != null) {
+            return title.isNotEmpty() && description.isNotEmpty()
+        }
+        return false
     }
 
     fun init(todo: TodoListItem) {
-
+        this.todo = todo
     }
 }

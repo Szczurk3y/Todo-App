@@ -27,4 +27,6 @@
     <string name="et_todo_updated_at_text">Todo updated at</string>
     <string name="tv_completed_text">Completed</string>
     <string name="et_todo_completed_text">Todo completed</string>
+    <string name="error_saving_todo">Title and description must not be empty.</string>
+    <string name="successfully_saving_todo">Saved</string>
 </resources>

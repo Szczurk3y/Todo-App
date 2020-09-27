@@ -29,6 +29,7 @@
             android:inputType="text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:text="@={viewmodel.title}"
             android:hint="@string/et_title_hint"
             />
         <TextView
@@ -44,6 +45,7 @@
             android:inputType="text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:text="@={viewmodel.description}"
             android:hint="@string/et_description_hint"
             />
         <androidx.appcompat.widget.SwitchCompat
@@ -58,5 +60,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"/>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/btn_save_text"
+            android:onClick="@{() -> viewmodel.saveTodo()}"/>
     </LinearLayout>
 </layout>

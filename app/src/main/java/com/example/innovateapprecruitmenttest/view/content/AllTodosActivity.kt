@@ -9,7 +9,6 @@ import android.view.Menu
 import android.view.MenuItem
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.example.innovateapprecruitmenttest.R
 import com.example.innovateapprecruitmenttest.model.adapter.TodosAdapter
 import com.example.innovateapprecruitmenttest.model.RawTodo
@@ -18,6 +17,7 @@ import com.example.innovateapprecruitmenttest.utils.ADD_REQUEST_CODE
 import com.example.innovateapprecruitmenttest.utils.EDIT_REQUEST_CODE
 import com.example.innovateapprecruitmenttest.viewmodel.AllTodosViewModel
 import kotlinx.android.synthetic.main.activity_alltodos.*
+import kotlinx.android.synthetic.main.content_alltodos.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.KoinComponent
 
@@ -30,10 +30,10 @@ class AllTodosActivity: AppCompatActivity(R.layout.activity_alltodos), KoinCompo
         setSupportActionBar(findViewById(R.id.toolbar))
 
         val splashLoadedTodos = intent.getParcelableArrayListExtra<TodoListItem>(RawTodo.TODO_KEY)?.toMutableList()
-        val recyclerView: RecyclerView = findViewById(R.id.recyclerView)
-        recyclerView.layoutManager = LinearLayoutManager(this)
 
-        adapter = TodosAdapter(onClick = { todo, position, view ->
+        recyclerView.layoutManager = LinearLayoutManager(this)
+        adapter = TodosAdapter(
+            onClick = { todo, position, view ->
                 Log.i("Todo clicked:", todo.title)
                 val intent = Intent(this, AddEditTodoActivity::class.java)
                 intent.putExtra(RawTodo.TODO_KEY, todo)
@@ -49,7 +49,8 @@ class AllTodosActivity: AppCompatActivity(R.layout.activity_alltodos), KoinCompo
         viewmodel.initTodos(splashLoadedTodos)
 
         fab.setOnClickListener {
-
+            val intent = Intent(this, AddEditTodoActivity::class.java)
+            startActivityForResult(intent, ADD_REQUEST_CODE)
         }
     }
 
@@ -68,7 +69,7 @@ class AllTodosActivity: AppCompatActivity(R.layout.activity_alltodos), KoinCompo
                 ADD_REQUEST_CODE -> {
                     val newTodo = data?.getParcelableExtra<RawTodo>(RawTodo.TODO_KEY)
                     newTodo?.let {
-                        viewmodel
+
                     }
                 }
             }
