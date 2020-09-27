@@ -25,11 +25,6 @@ class AddEditTodoActivity: AppCompatActivity(R.layout.activity_addedittodo) {
         binding = DataBindingUtil.setContentView(this, R.layout.content_addedittodo)
         binding.viewmodel = viewmodel
 
-        val todo = intent.getParcelableExtra<TodoListItem>(RawTodo.TODO_KEY)
-        if (todo != null) {
-            viewmodel.init(todo)
-        }
-
         viewmodel.todoLiveData.observe(this, Observer {
             updateTodoAndReturn(it)
         })

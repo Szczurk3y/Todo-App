@@ -1,5 +1,6 @@
 package com.example.innovateapprecruitmenttest.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -10,9 +11,10 @@ import com.example.innovateapprecruitmenttest.utils.handleResult
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.launch
 
-class AllTodosViewModel(private val todoRepository: TodoRepository): ViewModel() {
-
-    val todosLiveData = MutableLiveData<List<TodoListItem>>()
+class AllTodosViewModel(
+    private val todoRepository: TodoRepository,
+    val todosLiveData: MutableLiveData<List<TodoListItem>>
+): ViewModel() {
 
     private val coroutineExceptionHandler = CoroutineExceptionHandler { coroutineContext, throwable ->
         throwable.printStackTrace()
@@ -35,7 +37,11 @@ class AllTodosViewModel(private val todoRepository: TodoRepository): ViewModel()
         }
     }
 
-    fun initTodos(list: List<TodoListItem>?) {
+    fun restoreToddos() {
+        Log.i("Restored todos", todosLiveData.value.toString()) // just to check if it actually works
+    }
+
+    fun initTodos(list: List<TodoListItem>) {
         todosLiveData.postValue(list)
     }
 }

@@ -46,7 +46,11 @@ class AllTodosActivity: AppCompatActivity(R.layout.activity_alltodos), KoinCompo
             adapter.submitList(todos)
         })
 
-        viewmodel.initTodos(splashLoadedTodos)
+        if (!splashLoadedTodos.isNullOrEmpty()) {
+            viewmodel.initTodos(splashLoadedTodos)
+        } else {
+            viewmodel.restoreToddos()
+        }
 
         fab.setOnClickListener {
             val intent = Intent(this, AddEditTodoActivity::class.java)
