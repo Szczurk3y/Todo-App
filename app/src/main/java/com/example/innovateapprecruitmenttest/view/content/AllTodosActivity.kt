@@ -16,6 +16,7 @@ import com.example.innovateapprecruitmenttest.model.RawTodo
 import com.example.innovateapprecruitmenttest.utils.ADD_REQUEST_CODE
 import com.example.innovateapprecruitmenttest.utils.EDIT_REQUEST_CODE
 import com.example.innovateapprecruitmenttest.viewmodel.AllTodosViewModel
+import kotlinx.android.synthetic.main.activity_alltodos.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.KoinComponent
 
@@ -45,6 +46,10 @@ class AllTodosActivity: AppCompatActivity(R.layout.activity_alltodos), KoinCompo
         })
 
         viewmodel.initTodos(splashLoadedTodos)
+
+        fab.setOnClickListener {
+
+        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

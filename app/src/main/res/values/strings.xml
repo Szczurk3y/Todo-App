@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">InnovateAppRecruitmentTest</string>
+    <string name="app_name">Innovate App</string>
     <string name="action_settings">Settings</string>
     <!-- Strings used for fragments for navigation -->
     <string name="first_fragment_label">First Fragment</string>
@@ -10,4 +10,21 @@
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
     <string name="app_title">Innovate App</string>
+    <string name="btn_save_text">save</string>
+    <string name="et_deadline_hint">Todo deadline</string>
+    <string name="tv_deadline_text">Deadline At</string>
+    <string name="et_title_hint">Todo title</string>
+    <string name="tv_title_text">Title</string>
+    <string name="et_description_hint">Todo description</string>
+    <string name="tv_description_text">Description</string>
+    <string name="tv_completed_at_text">Completed At</string>
+    <string name="et_todo_completed_at_text">Todo completed at</string>
+    <string name="tv_priority_text">Priority</string>
+    <string name="et_todo_priority_text">Todo priority</string>
+    <string name="tv_inserted_at_text">Inserted At</string>
+    <string name="et_todo_inserted_at_text">Todo inserted at</string>
+    <string name="tv_updated_at_text">Updated At</string>
+    <string name="et_todo_updated_at_text">Todo updated at</string>
+    <string name="tv_completed_text">Completed</string>
+    <string name="et_todo_completed_text">Todo completed</string>
 </resources>

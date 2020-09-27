@@ -1,90 +1,208 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:showIn="@layout/activity_details"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    android:padding="16dp">
-    <TextView
-        android:id="@+id/tv_deadline"
+    tools:showIn="@layout/activity_details">
+    <data>
+        <variable
+            name="viewmodel"
+            type="com.example.innovateapprecruitmenttest.viewmodel.DetailsViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        tools:text="10.05.2000"
-        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
-        android:textAlignment="textEnd"/>
-    <TextView
-        android:id="@+id/tv_title"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/tv_deadline"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        tools:text="Title"
-        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline3"
-        android:textAlignment="center"/>
-    <TextView
-        android:id="@+id/tv_description"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/tv_title"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        tools:text="Description"
-        android:textAlignment="textStart"
-        android:textAppearance="@style/TextAppearance.AppCompat.Headline"/>
-    <TextView
-        android:id="@+id/tv_completed_at"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/tv_description"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        tools:text = "12.12.2012"
-        android:textAlignment="textStart"
-        android:textAppearance="@style/TextAppearance.AppCompat.Headline"/>
-    <TextView
-        android:id="@+id/tv_priority"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/tv_completed_at"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        tools:text = "priority"
-        android:textAlignment="textStart"
-        android:textAppearance="@style/TextAppearance.AppCompat.Headline"/>
-    <TextView
-        android:id="@+id/tv_inserted_at"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/tv_priority"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        tools:text="Inserted at: 02.05.2020"
-        android:textAlignment="textStart"
-        android:textAppearance="@style/TextAppearance.AppCompat.Headline"/>
-    <TextView
-        android:id="@+id/tv_updated_at"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/tv_inserted_at"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        tools:text= "2020-09-24T12:07:28+02:00"
-        android:textAlignment="textStart"
-        android:textAppearance="@style/TextAppearance.AppCompat.Headline"/>
-    <TextView
-        android:id="@+id/tv_completed"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/tv_updated_at"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        tools:text = "completed"
-        android:textAlignment="textStart"
-        android:textAppearance="@style/TextAppearance.AppCompat.Headline"/>
-</androidx.constraintlayout.widget.ConstraintLayout>
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+        <TextView
+            android:id="@+id/tv_deadline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/tv_deadline_text"
+            android:textSize="18sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_margin="16dp"/>
+
+        <EditText
+            android:id="@+id/et_deadline"
+            android:layout_margin="16dp"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:hint="@string/et_deadline_hint"
+            android:inputType="date"
+            android:text="@={viewmodel.deadlineText}"
+            app:layout_constraintBaseline_toBaselineOf="@+id/tv_deadline"
+            app:layout_constraintStart_toEndOf="@id/vertical_guideline"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/tv_deadline"
+            app:layout_constraintStart_toStartOf="parent"
+            android:text="@string/tv_title_text"
+            android:textSize="18sp"
+            android:layout_margin="16dp"/>
+
+        <EditText
+            android:id="@+id/et_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:hint="@string/et_title_hint"
+            android:inputType="text"
+            android:text="@={viewmodel.titleText}"
+            app:layout_constraintBaseline_toBaselineOf="@+id/tv_title"
+            app:layout_constraintStart_toEndOf="@id/vertical_guideline"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/tv_title"
+            app:layout_constraintStart_toStartOf="parent"
+            android:text="@string/tv_description_text"
+            android:textSize="18sp"
+            android:layout_margin="16dp"/>
+
+        <EditText
+            android:id="@+id/et_description"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:hint="@string/et_description_hint"
+            android:inputType="text"
+            android:text="@={viewmodel.descriptionText}"
+            app:layout_constraintBaseline_toBaselineOf="@+id/tv_description"
+            app:layout_constraintStart_toEndOf="@id/vertical_guideline"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_completed_at"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/tv_description"
+            app:layout_constraintStart_toStartOf="parent"
+            android:text="@string/tv_completed_at_text"
+            android:textSize="18sp"
+            android:layout_margin="16dp"/>
+
+        <EditText
+            android:id="@+id/et_completed_at"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:hint="@string/et_todo_completed_at_text"
+            android:inputType="text"
+            android:text="@={viewmodel.completedAtText}"
+            app:layout_constraintBaseline_toBaselineOf="@+id/tv_completed_at"
+            app:layout_constraintStart_toEndOf="@id/vertical_guideline"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_priority"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/tv_completed_at"
+            app:layout_constraintStart_toStartOf="parent"
+            android:text="@string/tv_priority_text"
+            android:textSize="18sp"
+            android:layout_margin="16dp"/>
+
+        <EditText
+            android:id="@+id/et_priority"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:hint="@string/et_todo_priority_text"
+            android:inputType="text"
+            app:layout_constraintBaseline_toBaselineOf="@+id/tv_priority"
+            app:layout_constraintStart_toEndOf="@id/vertical_guideline"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_inserted_at"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/tv_priority"
+            app:layout_constraintStart_toStartOf="parent"
+            android:text="@string/tv_inserted_at_text"
+            android:textSize="18sp"
+            android:layout_margin="16dp" />
+
+        <EditText
+            android:id="@+id/et_inserted_at"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:hint="@string/et_todo_inserted_at_text"
+            android:inputType="text"
+            android:text="@={viewmodel.insertedAt}"
+            app:layout_constraintBaseline_toBaselineOf="@+id/tv_inserted_at"
+            app:layout_constraintStart_toEndOf="@id/vertical_guideline"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_updated_at"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/tv_inserted_at"
+            app:layout_constraintStart_toStartOf="parent"
+            android:text="@string/tv_updated_at_text"
+            android:textSize="18sp"
+            android:layout_margin="16dp"/>
+
+        <EditText
+            android:id="@+id/et_updated_at"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:hint="@string/et_todo_updated_at_text"
+            android:inputType="text"
+            android:text="@={viewmodel.updatedAt}"
+            app:layout_constraintBaseline_toBaselineOf="@+id/tv_updated_at"
+            app:layout_constraintStart_toEndOf="@id/vertical_guideline"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_completed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/tv_updated_at"
+            app:layout_constraintStart_toStartOf="parent"
+            android:text="@string/tv_completed_text"
+            android:textSize="18sp"
+            android:layout_margin="16dp"/>
+
+        <EditText
+            android:id="@+id/et_completed"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:hint="@string/et_todo_completed_text"
+            android:inputType="text"
+            app:layout_constraintBaseline_toBaselineOf="@+id/tv_completed"
+            app:layout_constraintStart_toEndOf="@id/vertical_guideline"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <Button
+            android:id="@+id/btn_save"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/btn_save_text"
+            app:layout_constraintTop_toBottomOf="@id/tv_completed"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_margin="16dp"
+            android:onClick="@{() -> viewmodel.saveDetails() }"/>
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/vertical_guideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.3" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
