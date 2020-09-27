@@ -1,6 +1,5 @@
 package com.example.innovateapprecruitmenttest.model
 
-import com.example.innovateapprecruitmenttest.model.RawTodo
 import com.squareup.moshi.Json
 
 class TodoResponse(

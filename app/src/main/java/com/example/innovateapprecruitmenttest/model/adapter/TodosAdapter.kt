@@ -8,9 +8,9 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.innovateapprecruitmenttest.R
-import com.example.innovateapprecruitmenttest.model.RawTodo
+import com.example.innovateapprecruitmenttest.model.TodoListItem
 
-class TodosAdapter(private val onClick: (item: RawTodo, position: Int, view: View) -> Unit): ListAdapter<RawTodo, TodosAdapter.ViewHolder>(DIFF_CALLBACK) {
+class TodosAdapter(private val onClick: (item: TodoListItem, position: Int, view: View) -> Unit): ListAdapter<TodoListItem, TodosAdapter.ViewHolder>(DIFF_CALLBACK) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val itemView = LayoutInflater.from(parent.context).inflate(R.layout.item_todo, parent, false)
         return ViewHolder(itemView, onClick)
@@ -20,8 +20,8 @@ class TodosAdapter(private val onClick: (item: RawTodo, position: Int, view: Vie
         holder.bind(getItem(position))
     }
 
-    class ViewHolder(itemView: View, private val onClick: (item: RawTodo, position: Int, view: View) -> Unit): RecyclerView.ViewHolder(itemView) {
-        fun bind(item: RawTodo) = with(itemView) {
+    class ViewHolder(itemView: View, private val onClick: (item: TodoListItem, position: Int, view: View) -> Unit): RecyclerView.ViewHolder(itemView) {
+        fun bind(item: TodoListItem) = with(itemView) {
             val tvDeadline: TextView = findViewById(R.id.tv_item_deadline)
             val tvTitle: TextView = findViewById(R.id.tv_item_title)
             val tvDescription: TextView = findViewById(R.id.tv_item_description)
@@ -35,11 +35,11 @@ class TodosAdapter(private val onClick: (item: RawTodo, position: Int, view: Vie
     }
 
     companion object {
-        private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<RawTodo>() {
-            override fun areItemsTheSame(oldItem: RawTodo, newItem: RawTodo): Boolean =
+        private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<TodoListItem>() {
+            override fun areItemsTheSame(oldItem: TodoListItem, newItem: TodoListItem): Boolean =
                 oldItem.id == newItem.id
 
-            override fun areContentsTheSame(oldItem: RawTodo, newItem: RawTodo): Boolean =
+            override fun areContentsTheSame(oldItem: TodoListItem, newItem: TodoListItem): Boolean =
                 oldItem == newItem
         }
     }

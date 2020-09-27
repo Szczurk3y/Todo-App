@@ -6,10 +6,11 @@ import androidx.room.*
 import androidx.sqlite.db.SupportSQLiteDatabase
 import androidx.sqlite.db.SupportSQLiteOpenHelper
 import com.example.innovateapprecruitmenttest.model.RawTodo
+import com.example.innovateapprecruitmenttest.model.TodoListItem
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
-@Database(entities = [RawTodo::class], version = 1, exportSchema = false)
+@Database(entities = [TodoListItem::class], version = 1, exportSchema = false)
 abstract class TodosDatabase: RoomDatabase() {
     abstract fun todoDao(): TodoDao
 

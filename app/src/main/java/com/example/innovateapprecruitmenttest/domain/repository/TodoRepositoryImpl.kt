@@ -1,17 +1,10 @@
 package com.example.innovateapprecruitmenttest.domain.repository
 
-import android.util.Log
-import androidx.lifecycle.LiveData
 import com.example.innovateapprecruitmenttest.di.API_KEY
-import com.example.innovateapprecruitmenttest.model.RawTodo
+import com.example.innovateapprecruitmenttest.model.TodoListItem
 import com.example.innovateapprecruitmenttest.model.api.TodoAPI
 import com.example.innovateapprecruitmenttest.model.room.TodoDao
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.schedulers.Schedulers
-import kotlinx.coroutines.withContext
-import org.koin.core.KoinComponent
-import org.koin.core.inject
+
 
 // Injected in AppModule
 class TodoRepositoryImpl(
@@ -19,14 +12,22 @@ class TodoRepositoryImpl(
     private val todoDao: TodoDao
 ): TodoRepository {
 
-    override suspend fun getTodos(): List<RawTodo> {
+    override suspend fun getTodos(): List<TodoListItem> {
         /**
          * If there's no internet connection, default to the cached values.
          * Otherwise propagate the error.
          * */
         val cachedTodos = todoDao.getSavedTodos()
-        val apiTodos = try {
-            todoApi.getAllTodos(API_KEY).todos
+        val apiTodos = try { // apiTodos returns RawTodo, so we must transform it to TodoListItem as follows:
+            todoApi.getAllTodos(API_KEY).todos.map {
+                TodoListItem(
+                    it.id,
+                    it.title,
+                    it.description,
+                    it.priority,
+                    it.deadlineAt
+                )
+            }
         } catch (error: Throwable) {
             null
         }
@@ -37,7 +38,7 @@ class TodoRepositoryImpl(
         return apiTodos ?: cachedTodos
     }
 
-    override suspend fun getTodo(id: String): RawTodo {
+    override suspend fun getTodo(id: String): TodoListItem {
         TODO("Not yet implemented")
     }
 
@@ -45,11 +46,11 @@ class TodoRepositoryImpl(
         TODO("Not yet implemented")
     }
 
-    override suspend fun deleteTodo(todo: RawTodo) {
+    override suspend fun deleteTodo(todo: TodoListItem) {
         TODO("Not yet implemented")
     }
 
-    override suspend fun updateTodo(todo: RawTodo) {
+    override suspend fun updateTodo(todo: TodoListItem) {
         todoDao.updateTodo(todo)
     }
 }

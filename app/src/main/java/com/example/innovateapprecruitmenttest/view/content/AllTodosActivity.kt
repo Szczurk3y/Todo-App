@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.innovateapprecruitmenttest.R
 import com.example.innovateapprecruitmenttest.model.adapter.TodosAdapter
 import com.example.innovateapprecruitmenttest.model.RawTodo
+import com.example.innovateapprecruitmenttest.model.TodoListItem
 import com.example.innovateapprecruitmenttest.utils.ADD_REQUEST_CODE
 import com.example.innovateapprecruitmenttest.utils.EDIT_REQUEST_CODE
 import com.example.innovateapprecruitmenttest.viewmodel.AllTodosViewModel
@@ -28,13 +29,13 @@ class AllTodosActivity: AppCompatActivity(R.layout.activity_alltodos), KoinCompo
         super.onCreate(savedInstanceState)
         setSupportActionBar(findViewById(R.id.toolbar))
 
-        val splashLoadedTodos = intent.getParcelableArrayListExtra<RawTodo>(RawTodo.TODO_KEY)?.toMutableList()
+        val splashLoadedTodos = intent.getParcelableArrayListExtra<TodoListItem>(RawTodo.TODO_KEY)?.toMutableList()
         val recyclerView: RecyclerView = findViewById(R.id.recyclerView)
         recyclerView.layoutManager = LinearLayoutManager(this)
 
         adapter = TodosAdapter(onClick = { todo, position, view ->
                 Log.i("Todo clicked:", todo.title)
-                val intent = Intent(this, DetailsActivity::class.java)
+                val intent = Intent(this, AddEditTodoActivity::class.java)
                 intent.putExtra(RawTodo.TODO_KEY, todo)
                 startActivityForResult(intent, EDIT_REQUEST_CODE)
             })
@@ -58,14 +59,17 @@ class AllTodosActivity: AppCompatActivity(R.layout.activity_alltodos), KoinCompo
             Log.i("Edit request", Activity.RESULT_OK.toString())
             when(requestCode) {
                 EDIT_REQUEST_CODE -> {
-                    val updated_todo = data?.getParcelableExtra<RawTodo>(RawTodo.TODO_KEY)
-                    updated_todo?.let {
-                        viewmodel.updateTodo(updated_todo)
+                    val updatedTodo = data?.getParcelableExtra<TodoListItem>(RawTodo.TODO_KEY)
+                    updatedTodo?.let {
+                        viewmodel.updateTodo(updatedTodo)
                     }
                 }
 
                 ADD_REQUEST_CODE -> {
-
+                    val newTodo = data?.getParcelableExtra<RawTodo>(RawTodo.TODO_KEY)
+                    newTodo?.let {
+                        viewmodel
+                    }
                 }
             }
         } else {

@@ -24,7 +24,7 @@
             android:name=".view.content.AllTodosActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".view.content.DetailsActivity"
+            android:name=".view.content.AddEditTodoActivity"
             android:theme="@style/AppTheme.NoActionBar" />
     </application>
 

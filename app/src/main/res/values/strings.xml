@@ -12,7 +12,7 @@
     <string name="app_title">Innovate App</string>
     <string name="btn_save_text">save</string>
     <string name="et_deadline_hint">Todo deadline</string>
-    <string name="tv_deadline_text">Deadline At</string>
+    <string name="tv_deadline_text">Deadline</string>
     <string name="et_title_hint">Todo title</string>
     <string name="tv_title_text">Title</string>
     <string name="et_description_hint">Todo description</string>
