@@ -1,5 +1,5 @@
 package com.example.innovateapprecruitmenttest.model.response
 
-class InsertTodoResponse(
+class BaseTodoResponse(
     val id: String
 )

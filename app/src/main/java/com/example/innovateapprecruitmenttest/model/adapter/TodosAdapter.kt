@@ -20,6 +20,10 @@ class TodosAdapter(private val onClick: (item: TodoListItem, position: Int, view
         holder.bind(getItem(position))
     }
 
+    fun getTodoAt(position: Int): TodoListItem {
+        return getItem(position)
+    }
+
     class ViewHolder(itemView: View, private val onClick: (item: TodoListItem, position: Int, view: View) -> Unit): RecyclerView.ViewHolder(itemView) {
         fun bind(item: TodoListItem) = with(itemView) {
             val tvDeadline: TextView = findViewById(R.id.tv_item_deadline)

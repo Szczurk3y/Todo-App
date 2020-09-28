@@ -7,8 +7,13 @@ import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.Toast
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.ItemTouchHelper
+import androidx.recyclerview.widget.ItemTouchHelper.LEFT
+import androidx.recyclerview.widget.ItemTouchHelper.RIGHT
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.innovateapprecruitmenttest.R
 import com.example.innovateapprecruitmenttest.model.adapter.TodosAdapter
 import com.example.innovateapprecruitmenttest.model.RawTodo
@@ -46,7 +51,6 @@ class AllTodosActivity: AppCompatActivity(R.layout.activity_alltodos), KoinCompo
             adapter.submitList(todos)
             adapter.notifyDataSetChanged()
             Log.i("Adapter list", adapter.currentList.toString())
-            Log.i("elo?", "elo!")
         })
 
         if (!splashLoadedTodos.isNullOrEmpty()) {
@@ -59,6 +63,25 @@ class AllTodosActivity: AppCompatActivity(R.layout.activity_alltodos), KoinCompo
             val intent = Intent(this, AddEditTodoActivity::class.java)
             startActivityForResult(intent, ADD_REQUEST_CODE)
         }
+
+        initTouchHelper()
+    }
+
+    private fun initTouchHelper() {
+        val touchHelper = ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(0, LEFT or RIGHT) {
+            override fun onMove(
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder,
+                target: RecyclerView.ViewHolder
+            ): Boolean {
+                return false
+            }
+
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                viewmodel.deleteTodo(adapter.getTodoAt(viewHolder.adapterPosition), viewHolder.adapterPosition)
+                Toast.makeText(this@AllTodosActivity, "Todo deleted", Toast.LENGTH_SHORT).show()
+            }
+        }).attachToRecyclerView(recyclerView)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -69,7 +92,7 @@ class AllTodosActivity: AppCompatActivity(R.layout.activity_alltodos), KoinCompo
                 EDIT_REQUEST_CODE -> {
                     val updatedTodo = data?.getParcelableExtra<TodoListItem>(RawTodo.TODO_KEY)
                     updatedTodo?.let {
-                        viewmodel.updateTodo(updatedTodo)
+//                        viewmodel.updateTodo(updatedTodo)
                     }
                 }
 

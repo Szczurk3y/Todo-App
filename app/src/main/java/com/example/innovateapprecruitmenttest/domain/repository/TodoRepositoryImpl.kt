@@ -50,27 +50,49 @@ class TodoRepositoryImpl(
     override suspend fun insertTodo(todo: TodoListItem): TodoListItem? =
         try {
             val apiIdResult = todoApi.insertTodo(API_KEY, todo.title).id
-            todoDao.insertTodo(todo)
-            TodoListItem(
-                apiIdResult,
-                todo.title,
-                todo.description,
-                todo.priority,
-                todo.deadlineAt
-            )
+            val updatedTodo = updateTodo(apiIdResult, todo)
+            Log.i("Updating todo result:", "Success:::${updatedTodo.toString()}")
+            if (updatedTodo != null) {
+                todoDao.insertTodo(updatedTodo)
+                updatedTodo
+            } else {
+                null
+            }
         } catch (error: Throwable) {
             Log.i("Inserting todo result:", "Error:::${error.message}")
             null
         }
 
 
-    override suspend fun deleteTodo(todo: TodoListItem) {
-        TODO("Not yet implemented")
+    override suspend fun deleteTodo(todo: TodoListItem): Boolean = try {
+        todoApi.deleteTodo(API_KEY, todo.id)
+        todoDao.deleteTodo(todo)
+        Log.i("Deleting todo result:", "Success:::deleted ${todo.id}")
+        true
+    } catch (error: Throwable) {
+        Log.i("Deleting todo result:", "Error:::${error.message}")
+        false
     }
 
-    override suspend fun updateTodo(todo: TodoListItem) {
-        todoDao.updateTodo(todo)
-    }
+    override suspend fun updateTodo(id: String, todo: TodoListItem): TodoListItem? =
+        try {
+            val params = HashMap<String, Any>()
+            params["title"] = todo.title
+            params["priority"] = todo.priority
+            todo.description?.let { params["description"] = todo.description }
+            todo.deadlineAt?.let { params["deadline_at"] = todo.deadlineAt }
+            todoApi.updateTodo(API_KEY, id, params)
+            TodoListItem(
+                id,
+                todo.title,
+                todo.description,
+                todo.priority,
+                todo.deadlineAt
+            )
+        } catch (error: Throwable) {
+            Log.i("Updating todo result:", "Error:::${error.message}")
+            null
+        }
 
 
 }

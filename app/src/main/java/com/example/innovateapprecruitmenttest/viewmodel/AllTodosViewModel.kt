@@ -18,17 +18,17 @@ class AllTodosViewModel(
     private val coroutineExceptionHandler = CoroutineExceptionHandler { coroutineContext, throwable ->
         throwable.printStackTrace()
     }
-
-    fun updateTodo(todo: TodoListItem) {
-        viewModelScope.launch(coroutineExceptionHandler) {
-            kotlin.runCatching { todoRepository.updateTodo(todo) }
-                .onSuccess {
-                    handleResult("Updating todo result", "Successfully updated todo")
-                }.onFailure {error ->
-                    handleResult("Updating todo result", "Error:::${error.message}")
-                }
-        }
-    }
+//
+//    fun updateTodo(todo: TodoListItem) {
+//        viewModelScope.launch(coroutineExceptionHandler) {
+//            kotlin.runCatching { todoRepository.updateTodo(todo) }
+//                .onSuccess {
+//                    handleResult("Updating todo result", "Successfully updated todo")
+//                }.onFailure {error ->
+//                    handleResult("Updating todo result", "Error:::${error.message}")
+//                }
+//        }
+//    }
 
     fun insertTodo(todo: TodoListItem) {
         viewModelScope.launch(coroutineExceptionHandler) {
@@ -44,6 +44,18 @@ class AllTodosViewModel(
         }
     }
 
+    fun deleteTodo(todo: TodoListItem, position: Int) {
+        viewModelScope.launch(coroutineExceptionHandler) {
+            kotlin.runCatching { todoRepository.deleteTodo(todo) }
+                .onSuccess {
+                    todosLiveData.deleteItemAt(position)
+                    Log.i("Deleting todo result:", "Success, deleted todo id ::: ${todo.id} ")
+                }.onFailure { error ->
+                    Log.i("Deleting todo result:", "Error:::${error.message}")
+                }
+        }
+    }
+
     fun restoreTodos() {
         Log.i("Restored todos", todosLiveData.value.toString()) // just to check if it actually works
     }
@@ -55,6 +67,12 @@ class AllTodosViewModel(
     fun <T> MutableLiveData<MutableList<T>>.addNewItem(item: T) {
         val oldValue = this.value ?: mutableListOf()
         oldValue.add(item)
+        this.value = oldValue
+    }
+
+    fun <T> MutableLiveData<MutableList<T>>.deleteItemAt(position: Int) {
+        val oldValue = this.value ?: mutableListOf()
+        oldValue.removeAt(position)
         this.value = oldValue
     }
 }
