@@ -4,8 +4,6 @@ import android.util.Log
 import androidx.databinding.ObservableField
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.innovateapprecruitmenttest.domain.repository.TodoRepository
-import com.example.innovateapprecruitmenttest.model.RawTodo
 import com.example.innovateapprecruitmenttest.model.TodoListItem
 
 class AddEditTodoViewModel: ViewModel() {
@@ -23,7 +21,14 @@ class AddEditTodoViewModel: ViewModel() {
         Log.i("Save button", canSaveTodo().toString())
         return if (canSaveTodo()) {
             saveLiveData.postValue(true)
-
+            todoLiveData.postValue(
+                TodoListItem(
+                    "elo",
+                    title.get()!!, // Checked in canSaveTodo()
+                    description.get()!!, // Same
+                    priority,
+                    null
+                ))
         } else {
             saveLiveData.postValue(false)
         }

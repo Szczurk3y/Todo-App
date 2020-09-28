@@ -44,12 +44,15 @@ class AllTodosActivity: AppCompatActivity(R.layout.activity_alltodos), KoinCompo
 
         viewmodel.todosLiveData.observe(this, Observer { todos ->
             adapter.submitList(todos)
+            adapter.notifyDataSetChanged()
+            Log.i("Adapter list", adapter.currentList.toString())
+            Log.i("elo?", "elo!")
         })
 
         if (!splashLoadedTodos.isNullOrEmpty()) {
             viewmodel.initTodos(splashLoadedTodos)
         } else {
-            viewmodel.restoreToddos()
+            viewmodel.restoreTodos()
         }
 
         fab.setOnClickListener {
@@ -71,9 +74,10 @@ class AllTodosActivity: AppCompatActivity(R.layout.activity_alltodos), KoinCompo
                 }
 
                 ADD_REQUEST_CODE -> {
-                    val newTodo = data?.getParcelableExtra<RawTodo>(RawTodo.TODO_KEY)
+                    val newTodo = data?.getParcelableExtra<TodoListItem>(RawTodo.TODO_KEY)
                     newTodo?.let {
-
+                        Log.i("Adding todo result", it.toString())
+                        viewmodel.insertTodo(it)
                     }
                 }
             }
