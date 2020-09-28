@@ -12,11 +12,11 @@ interface TodoAPI {
     suspend fun getAllTodos(@Header("Authorization") token: String): TodoResponse
 
     @POST(".")
-    suspend fun insertTodo(@Header("Authorization") token: String, @Query("title") title: String): BaseTodoResponse
+    suspend fun insertTodo(@Header("Authorization") token: String, @Query("title") title: String): Response<BaseTodoResponse>
 
     @DELETE("{id}")
-    suspend fun deleteTodo(@Header("Authorization") token: String, @Path("id") id: String): BaseTodoResponse
+    suspend fun deleteTodo(@Header("Authorization") token: String, @Path("id") id: String): Response<BaseTodoResponse>
 
     @PATCH("{id}")
-    suspend fun updateTodo(@Header("Authorization") token: String, @Path("id") id: String, @QueryMap options: Map<String, Any>): BaseTodoResponse
+    suspend fun updateTodo(@Header("Authorization") token: String, @Path("id") id: String, @QueryMap options: Map<String, Any>): Response<BaseTodoResponse>
 }
