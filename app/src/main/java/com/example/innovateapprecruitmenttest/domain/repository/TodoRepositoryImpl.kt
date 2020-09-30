@@ -48,15 +48,16 @@ class TodoRepositoryImpl(
         try {
             val apiRequest = todoApi.insertTodo(API_KEY, todo.title)
             val apiIdResult = apiRequest.body()!!.id
+            val tempTodo = TodoListItem(apiIdResult, "", null, false, null)
+            todoDao.insertTodo(tempTodo)
             Log.i("Inserted todo id:", apiIdResult)
             if (apiRequest.isSuccessful) {
                 val updatedTodo = updateTodo(apiIdResult, todo)
                 if (updatedTodo != null) {
                     Log.i("Inserting todo result:", "Success:::${updatedTodo.toString()}")
-                    todoDao.insertTodo(updatedTodo)
                     updatedTodo
                 } else {
-                    deleteTodo(TodoListItem(apiIdResult, "", null, false, null)) // only id matters
+                    deleteTodo(tempTodo) // only id matters
                     Log.i("Inserting todo result:", "Deleted todo id:::$apiIdResult}")
                     null
                 }
@@ -70,6 +71,33 @@ class TodoRepositoryImpl(
             null
         }
 
+    override suspend fun updateTodo(id: String, todo: TodoListItem): TodoListItem? =
+        try {
+            val params = HashMap<String, Any>()
+            params["title"] = todo.title
+            params["priority"] = todo.priority
+            todo.description?.let { params["description"] = todo.description }
+            todo.deadlineAt?.let { params["deadline_at"] = todo.deadlineAt }
+            val apiRequest = todoApi.updateTodo(API_KEY, id, params)
+            if (apiRequest.isSuccessful) {
+                val updatedTodo = TodoListItem(
+                    id,
+                    todo.title,
+                    todo.description,
+                    todo.priority,
+                    todo.deadlineAt
+                )
+                todoDao.updateTodo(updatedTodo)
+                updatedTodo
+            } else {
+                Log.i("Error while updating", apiRequest.errorBody()?.string().toString())
+                apiRequestError("updating")
+                null
+            }
+        } catch (error: Throwable) {
+            Log.i("Updating todo result:", "Error:::${error.message}")
+            null
+        }
 
     override suspend fun deleteTodo(todo: TodoListItem): Boolean = try {
         val apiRequest = todoApi.deleteTodo(API_KEY, todo.id)
@@ -85,32 +113,6 @@ class TodoRepositoryImpl(
         Log.i("Deleting todo result:", "Error:::${error.message}")
         false
     }
-
-    override suspend fun updateTodo(id: String, todo: TodoListItem): TodoListItem? =
-        try {
-            val params = HashMap<String, Any>()
-            params["title"] = todo.title
-            params["priority"] = todo.priority
-            todo.description?.let { params["description"] = todo.description }
-            todo.deadlineAt?.let { params["deadline_at"] = todo.deadlineAt }
-            val apiRequest = todoApi.updateTodo(API_KEY, id, params)
-            if (apiRequest.isSuccessful) {
-                TodoListItem(
-                    id,
-                    todo.title,
-                    todo.description,
-                    todo.priority,
-                    todo.deadlineAt
-                )
-            } else {
-                Log.i("Error while updating", apiRequest.errorBody()?.string().toString())
-                apiRequestError("updating")
-                null
-            }
-        } catch (error: Throwable) {
-            Log.i("Updating todo result:", "Error:::${error.message}")
-            null
-        }
 
 
 }
