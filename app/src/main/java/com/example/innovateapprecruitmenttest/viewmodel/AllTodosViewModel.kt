@@ -19,16 +19,21 @@ class AllTodosViewModel(
         throwable.printStackTrace()
     }
 
-//    fun updateTodo(todo: TodoListItem) {
-//        viewModelScope.launch(coroutineExceptionHandler) {
-//            kotlin.runCatching { todoRepository.updateTodo(todo) }
-//                .onSuccess {
-//                    handleResult("Updating todo result", "Successfully updated todo")
-//                }.onFailure {error ->
-//                    handleResult("Updating todo result", "Error:::${error.message}")
-//                }
-//        }
-//    }
+    fun updateTodo(todo: TodoListItem) {
+        viewModelScope.launch(coroutineExceptionHandler) {
+            kotlin.runCatching { todoRepository.updateTodo(todo.id, todo) }
+                .onSuccess { updatedTodo: TodoListItem? ->
+                    updatedTodo?.let {
+                        val pos = todosLiveData.value?.map { it.id }?.indexOf(it.id)
+                        Log.i("Item position:", pos.toString())
+                        pos?.let { todosLiveData.updateItemAt(pos, updatedTodo) }
+                    }
+                    handleResult("Updating todo result", "Successfully updated todo")
+                }.onFailure {error ->
+                    handleResult("Updating todo result", "Error:::${error.message}")
+                }
+        }
+    }
 
     fun insertTodo(todo: TodoListItem) {
         viewModelScope.launch(coroutineExceptionHandler) {
@@ -73,6 +78,12 @@ class AllTodosViewModel(
     fun <T> MutableLiveData<MutableList<T>>.deleteItemAt(position: Int) {
         val oldValue = this.value ?: mutableListOf()
         oldValue.removeAt(position)
+        this.value = oldValue
+    }
+
+    fun <T> MutableLiveData<MutableList<T>>.updateItemAt(position: Int, item: T) {
+        val oldValue = this.value ?: mutableListOf()
+        oldValue.set(position, item)
         this.value = oldValue
     }
 }

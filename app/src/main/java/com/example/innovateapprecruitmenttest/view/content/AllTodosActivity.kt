@@ -87,12 +87,12 @@ class AllTodosActivity: AppCompatActivity(R.layout.activity_alltodos), KoinCompo
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == Activity.RESULT_OK) {
-            Log.i("Edit request", Activity.RESULT_OK.toString())
+            Log.i("Activity request result", Activity.RESULT_OK.toString())
             when(requestCode) {
                 EDIT_REQUEST_CODE -> {
                     val updatedTodo = data?.getParcelableExtra<TodoListItem>(RawTodo.TODO_KEY)
                     updatedTodo?.let {
-//                        viewmodel.updateTodo(updatedTodo)
+                        viewmodel.updateTodo(updatedTodo)
                     }
                 }
 

@@ -17,10 +17,8 @@ class TodoRepositoryImpl(
 ): TodoRepository {
 
     override suspend fun getTodos(): List<TodoListItem> {
-
 //         If there's no internet connection, default to the cached values.
 //         Otherwise propagate the error.
-
         val cachedTodos = todoDao.getSavedTodos()
         val apiTodos = try { // apiTodo returns RawTodo, so we must transform it to TodoListItem as follows:
             todoApi.getAllTodos(API_KEY).todos.map {

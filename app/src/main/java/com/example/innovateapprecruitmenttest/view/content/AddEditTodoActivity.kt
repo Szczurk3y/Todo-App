@@ -34,6 +34,7 @@ class AddEditTodoActivity: AppCompatActivity(R.layout.activity_addedittodo) {
             et_description.hint = todoToUpdate.description
             // TODO: set date to deadline
             calendar.setDate(10000, true, false)
+            viewmodel.initTodo(todoToUpdate)
             Log.i("Date:", calendar.date.toString())
         }
 
