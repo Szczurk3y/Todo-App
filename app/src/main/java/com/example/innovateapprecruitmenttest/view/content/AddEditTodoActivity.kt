@@ -3,6 +3,7 @@ package com.example.innovateapprecruitmenttest.view.content
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
@@ -13,6 +14,7 @@ import com.example.innovateapprecruitmenttest.model.TodoListItem
 import com.example.innovateapprecruitmenttest.viewmodel.AddEditTodoViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import com.example.innovateapprecruitmenttest.databinding.ContentAddedittodoBinding
+import kotlinx.android.synthetic.main.content_addedittodo.*
 
 class AddEditTodoActivity: AppCompatActivity(R.layout.activity_addedittodo) {
 
@@ -24,6 +26,16 @@ class AddEditTodoActivity: AppCompatActivity(R.layout.activity_addedittodo) {
 
         binding = DataBindingUtil.setContentView(this, R.layout.content_addedittodo)
         binding.viewmodel = viewmodel
+
+        val todoToUpdate = intent.getParcelableExtra<TodoListItem>(RawTodo.TODO_KEY)
+
+        if (todoToUpdate != null) {
+            et_title.hint = todoToUpdate.title
+            et_description.hint = todoToUpdate.description
+            // TODO: set date to deadline
+            calendar.setDate(10000, true, false)
+            Log.i("Date:", calendar.date.toString())
+        }
 
         viewmodel.todoLiveData.observe(this, Observer {
             updateTodoAndReturn(it)

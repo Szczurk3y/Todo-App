@@ -16,8 +16,6 @@ class TodoRepositoryImpl(
     private val todoDao: TodoDao
 ): TodoRepository {
 
-    val disposables = CompositeDisposable()
-
     override suspend fun getTodos(): List<TodoListItem> {
 
 //         If there's no internet connection, default to the cached values.

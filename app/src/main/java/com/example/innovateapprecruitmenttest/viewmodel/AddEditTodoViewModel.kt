@@ -5,6 +5,7 @@ import androidx.databinding.ObservableField
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.innovateapprecruitmenttest.model.TodoListItem
+import java.util.*
 
 class AddEditTodoViewModel: ViewModel() {
     val todoLiveData = MutableLiveData<TodoListItem>()
@@ -13,8 +14,7 @@ class AddEditTodoViewModel: ViewModel() {
     var title = ObservableField<String>("")
     var description = ObservableField<String>("")
     var priority = false
-
-    lateinit var todo: TodoListItem
+//    var deadline: ObservableField<Date>()
 
 
     fun saveTodo() {
@@ -41,9 +41,5 @@ class AddEditTodoViewModel: ViewModel() {
             return title.isNotEmpty() && description.isNotEmpty()
         }
         return false
-    }
-
-    fun init(todo: TodoListItem) {
-        this.todo = todo
     }
 }

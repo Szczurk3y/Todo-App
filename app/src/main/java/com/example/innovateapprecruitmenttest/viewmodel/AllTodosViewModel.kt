@@ -18,7 +18,7 @@ class AllTodosViewModel(
     private val coroutineExceptionHandler = CoroutineExceptionHandler { coroutineContext, throwable ->
         throwable.printStackTrace()
     }
-//
+
 //    fun updateTodo(todo: TodoListItem) {
 //        viewModelScope.launch(coroutineExceptionHandler) {
 //            kotlin.runCatching { todoRepository.updateTodo(todo) }
