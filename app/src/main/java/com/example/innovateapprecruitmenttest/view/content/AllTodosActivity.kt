@@ -53,6 +53,14 @@ class AllTodosActivity: AppCompatActivity(R.layout.activity_alltodos), KoinCompo
             Log.i("Adapter list", adapter.currentList.toString())
         })
 
+        viewmodel.saveLiveData.observe(this, Observer { saved ->
+            if (saved) {
+                Toast.makeText(this, getString(R.string.successfully_saving_todo), Toast.LENGTH_SHORT).show()
+            } else {
+                Toast.makeText(this, getString(R.string.error_saving_todo), Toast.LENGTH_SHORT).show()
+            }
+        })
+
         if (!splashLoadedTodos.isNullOrEmpty()) {
             viewmodel.initTodos(splashLoadedTodos)
         } else {
@@ -68,7 +76,7 @@ class AllTodosActivity: AppCompatActivity(R.layout.activity_alltodos), KoinCompo
     }
 
     private fun initTouchHelper() {
-        val touchHelper = ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(0, LEFT or RIGHT) {
+        ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(0, LEFT or RIGHT) {
             override fun onMove(
                 recyclerView: RecyclerView,
                 viewHolder: RecyclerView.ViewHolder,
@@ -92,6 +100,7 @@ class AllTodosActivity: AppCompatActivity(R.layout.activity_alltodos), KoinCompo
                 EDIT_REQUEST_CODE -> {
                     val updatedTodo = data?.getParcelableExtra<TodoListItem>(RawTodo.TODO_KEY)
                     updatedTodo?.let {
+                        Log.i("Editing todo result", it.toString())
                         viewmodel.updateTodo(updatedTodo)
                     }
                 }

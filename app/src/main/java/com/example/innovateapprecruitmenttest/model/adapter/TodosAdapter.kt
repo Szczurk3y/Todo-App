@@ -30,7 +30,7 @@ class TodosAdapter(private val onClick: (item: TodoListItem, position: Int, view
             val tvTitle: TextView = findViewById(R.id.tv_item_title)
             val tvDescription: TextView = findViewById(R.id.tv_item_description)
 
-            tvDeadline.text = item.deadlineAt ?: "Add deadline"
+            tvDeadline.text = item.deadlineAt.toString() ?: "Add deadline"
             tvTitle.text = item.title
             tvDescription.text = item.description ?: "Add description"
 

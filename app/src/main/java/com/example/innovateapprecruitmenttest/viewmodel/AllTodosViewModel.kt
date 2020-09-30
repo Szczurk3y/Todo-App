@@ -15,6 +15,8 @@ class AllTodosViewModel(
     val todosLiveData: MutableLiveData<MutableList<TodoListItem>>
 ): ViewModel() {
 
+    val saveLiveData = MutableLiveData<Boolean>()
+
     private val coroutineExceptionHandler = CoroutineExceptionHandler { coroutineContext, throwable ->
         throwable.printStackTrace()
     }
@@ -28,7 +30,7 @@ class AllTodosViewModel(
                         Log.i("Item position:", pos.toString())
                         pos?.let { todosLiveData.updateItemAt(pos, updatedTodo) }
                     }
-                    handleResult("Updating todo result", "Successfully updated todo")
+                    Log.i("Updating todo result", "Successfully updated todo")
                 }.onFailure {error ->
                     handleResult("Updating todo result", "Error:::${error.message}")
                 }
@@ -42,9 +44,11 @@ class AllTodosViewModel(
                     newTodo?.let {
                         todosLiveData.addNewItem(newTodo)
                         Log.i("Inserting todo result:", "Success, todo id ::: $it")
+                        saveLiveData.postValue(true)
                     }
                 }.onFailure { error ->
                     Log.i("Inserting todo result:", "Error:::${error.message}")
+                    saveLiveData.postValue(false)
                 }
         }
     }

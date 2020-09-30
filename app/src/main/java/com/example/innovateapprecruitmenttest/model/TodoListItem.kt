@@ -6,6 +6,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.squareup.moshi.Json
 import kotlinx.android.parcel.Parcelize
+import java.util.*
 
 @Entity(tableName = "todo_table")
 @Parcelize
@@ -14,5 +15,5 @@ data class TodoListItem (
     val title: String,
     val description: String?,
     val priority: Boolean,
-    @Json(name = "deadline_at") val deadlineAt: String?
+    @Json(name = "deadline_at") val deadlineAt: Date?
 ): Parcelable

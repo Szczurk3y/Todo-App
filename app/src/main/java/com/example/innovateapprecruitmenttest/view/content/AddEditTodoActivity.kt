@@ -43,11 +43,10 @@ class AddEditTodoActivity: AppCompatActivity(R.layout.activity_addedittodo) {
         })
 
         viewmodel.saveLiveData.observe(this, Observer { canSave ->
-            if (canSave) {
-                Toast.makeText(this, getString(R.string.successfully_saving_todo), Toast.LENGTH_SHORT).show()
-            } else {
-                Toast.makeText(this, getString(R.string.error_saving_todo), Toast.LENGTH_SHORT).show()
+            if (!canSave) {
+                Toast.makeText(this, getString(R.string.error_empty_fields), Toast.LENGTH_SHORT).show()
             }
+            // We can't say if it's saved there, because connection errors may occur later (Toast saved is displayed in AllTodosActivity)
         })
     }
 

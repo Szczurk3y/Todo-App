@@ -1,10 +1,20 @@
 package com.example.innovateapprecruitmenttest.viewmodel
 
+import android.os.Build
 import android.util.Log
+import android.util.TimeFormatException
+import androidx.annotation.RequiresApi
 import androidx.databinding.ObservableField
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.innovateapprecruitmenttest.model.TodoListItem
+import java.text.DateFormat
+import java.text.SimpleDateFormat
+import java.time.LocalDate
+import java.time.LocalDateTime
+import java.time.ZonedDateTime
+import java.time.format.DateTimeFormatter
+import java.util.*
 
 class AddEditTodoViewModel: ViewModel() {
     val todoLiveData = MutableLiveData<TodoListItem>()
@@ -13,7 +23,7 @@ class AddEditTodoViewModel: ViewModel() {
     var title = ObservableField<String>("")
     var description = ObservableField<String>("")
     var priority = false
-//    var deadline: ObservableField<Date>()
+    var deadline: Date? = null
 
     var todo: TodoListItem? = null
 
@@ -27,8 +37,8 @@ class AddEditTodoViewModel: ViewModel() {
                 description = description.get()!!,
                 priority = priority,
                 deadlineAt = null
+//                deadlineAt = todo?.deadlineAt
             )
-            saveLiveData.postValue(true)
             todoLiveData.postValue(newTodo)
         } else {
             saveLiveData.postValue(false)
@@ -49,6 +59,6 @@ class AddEditTodoViewModel: ViewModel() {
         title.set(oldTodo.title)
         description.set(oldTodo.description)
         priority = oldTodo.priority
-        // deadlineAt = oldTodo.deadlineAt
+        deadline = oldTodo.deadlineAt
     }
 }

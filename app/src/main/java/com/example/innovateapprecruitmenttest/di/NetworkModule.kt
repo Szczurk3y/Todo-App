@@ -26,9 +26,9 @@ fun networkModule() = module {
     // Creates client
     single {
         val client = OkHttpClient().newBuilder()
-            .connectTimeout(30, TimeUnit.SECONDS)
-            .writeTimeout(30, TimeUnit.SECONDS)
-            .readTimeout(30, TimeUnit.SECONDS)
+            .connectTimeout(5, TimeUnit.SECONDS)
+            .writeTimeout(5, TimeUnit.SECONDS)
+            .readTimeout(5, TimeUnit.SECONDS)
         if (BuildConfig.DEBUG) { // Adds interceptor only in debug mode, so app won't slow in production
             client.addInterceptor(get<HttpLoggingInterceptor>())
         }

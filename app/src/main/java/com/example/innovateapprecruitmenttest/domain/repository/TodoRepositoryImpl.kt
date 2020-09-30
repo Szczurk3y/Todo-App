@@ -47,17 +47,21 @@ class TodoRepositoryImpl(
     override suspend fun insertTodo(todo: TodoListItem): TodoListItem? =
         try {
             val apiRequest = todoApi.insertTodo(API_KEY, todo.title)
+            val apiIdResult = apiRequest.body()!!.id
+            Log.i("Inserted todo id:", apiIdResult)
             if (apiRequest.isSuccessful) {
-                val apiIdResult = apiRequest.body()!!.id
                 val updatedTodo = updateTodo(apiIdResult, todo)
-                Log.i("Updating todo result:", "Success:::${updatedTodo.toString()}")
                 if (updatedTodo != null) {
+                    Log.i("Inserting todo result:", "Success:::${updatedTodo.toString()}")
                     todoDao.insertTodo(updatedTodo)
                     updatedTodo
                 } else {
+                    deleteTodo(TodoListItem(apiIdResult, "", null, false, null)) // only id matters
+                    Log.i("Inserting todo result:", "Deleted todo id:::$apiIdResult}")
                     null
                 }
             } else {
+                Log.i("Inserting todo result", apiRequest.errorBody()?.string().toString())
                 apiRequestError("inserting")
                 null
             }
@@ -99,6 +103,7 @@ class TodoRepositoryImpl(
                     todo.deadlineAt
                 )
             } else {
+                Log.i("Error while updating", apiRequest.errorBody()?.string().toString())
                 apiRequestError("updating")
                 null
             }
