@@ -4,8 +4,13 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
+import android.widget.CheckBox
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
+import androidx.core.view.children
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import com.example.innovateapprecruitmenttest.R
@@ -14,10 +19,12 @@ import com.example.innovateapprecruitmenttest.model.TodoListItem
 import com.example.innovateapprecruitmenttest.viewmodel.AddEditTodoViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import com.example.innovateapprecruitmenttest.databinding.ContentAddedittodoBinding
+import kotlinx.android.synthetic.main.activity_addedittodo.*
 import kotlinx.android.synthetic.main.content_addedittodo.*
+import org.koin.core.KoinComponent
 import java.util.*
 
-class AddEditTodoActivity: AppCompatActivity(R.layout.activity_addedittodo) {
+class AddEditTodoActivity: AppCompatActivity(R.layout.activity_addedittodo), KoinComponent {
 
     private val viewmodel: AddEditTodoViewModel by viewModel<AddEditTodoViewModel>() // Injecting viewmodel
     lateinit var binding: ContentAddedittodoBinding
@@ -66,5 +73,22 @@ class AddEditTodoActivity: AppCompatActivity(R.layout.activity_addedittodo) {
         data.putExtra(RawTodo.TODO_KEY, todo)
         setResult(Activity.RESULT_OK, data)
         finish()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_addedit, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        Toast.makeText(this, "elo", Toast.LENGTH_SHORT).show()
+        return when(item.itemId) {
+            R.id.action_priority -> {
+                item.isChecked = !item.isChecked
+                viewmodel.priority.set(item.isChecked)
+                true
+            }
+            else -> false
+        }
     }
 }

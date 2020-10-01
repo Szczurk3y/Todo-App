@@ -3,12 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="@layout/activity_addedittodo">
+
     <data>
         <variable
             name="viewmodel"
             type="com.example.innovateapprecruitmenttest.viewmodel.AddEditTodoViewModel" />
     </data>
-
 
     <LinearLayout
         android:layout_width="match_parent"

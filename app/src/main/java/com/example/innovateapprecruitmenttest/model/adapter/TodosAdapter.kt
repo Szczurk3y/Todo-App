@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.innovateapprecruitmenttest.R
 import com.example.innovateapprecruitmenttest.model.TodoListItem
+import kotlinx.android.synthetic.main.item_todo.view.*
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -28,19 +29,23 @@ class TodosAdapter(private val onClick: (item: TodoListItem, position: Int, view
 
     class ViewHolder(itemView: View, private val onClick: (item: TodoListItem, position: Int, view: View) -> Unit): RecyclerView.ViewHolder(itemView) {
         fun bind(item: TodoListItem) = with(itemView) {
-            val tvDeadline: TextView = findViewById(R.id.tv_item_deadline)
-            val tvTitle: TextView = findViewById(R.id.tv_item_title)
-            val tvDescription: TextView = findViewById(R.id.tv_item_description)
+            val resourceId = if (item.priority) {
+                R.drawable.ic_star
+            } else {
+                R.drawable.ic_star_border
+            }
 
-            tvDeadline.text = if (item.deadlineAt != null) {
+            iv_priority.setImageResource(resourceId)
+            tv_item_deadline.text = if (item.deadlineAt != null) {
                 val date = Date(item.deadlineAt)
                 val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
                 sdf.format(date)
             } else {
                 "Add deadline"
             }
-            tvTitle.text = item.title
-            tvDescription.text = item.description ?: "Add description"
+            tv_item_title.text = item.title
+            tv_item_description.text = item.description ?: "Add description"
+
 
             setOnClickListener { onClick(item, adapterPosition, this) }
         }

@@ -30,4 +30,6 @@
     <string name="error_empty_fields">Title and description must not be empty.</string>
     <string name="error_saving_todo">Error, connection problems </string>
     <string name="successfully_saving_todo">Saved</string>
+    <string name="action_priority">action_priority</string>
+    <string name="delete_all_text">Delete all</string>
 </resources>
