@@ -6,7 +6,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.innovateapprecruitmenttest.domain.repository.TodoRepository
 import com.example.innovateapprecruitmenttest.model.TodoListItem
+import com.example.innovateapprecruitmenttest.utils.addNewItem
+import com.example.innovateapprecruitmenttest.utils.deleteItemAt
 import com.example.innovateapprecruitmenttest.utils.handleResult
+import com.example.innovateapprecruitmenttest.utils.updateItemAt
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.launch
 
@@ -71,23 +74,5 @@ class AllTodosViewModel(
 
     fun initTodos(list: MutableList<TodoListItem>) {
         todosLiveData.postValue(list)
-    }
-
-    fun <T> MutableLiveData<MutableList<T>>.addNewItem(item: T) {
-        val oldValue = this.value ?: mutableListOf()
-        oldValue.add(item)
-        this.value = oldValue
-    }
-
-    fun <T> MutableLiveData<MutableList<T>>.deleteItemAt(position: Int) {
-        val oldValue = this.value ?: mutableListOf()
-        oldValue.removeAt(position)
-        this.value = oldValue
-    }
-
-    fun <T> MutableLiveData<MutableList<T>>.updateItemAt(position: Int, item: T) {
-        val oldValue = this.value ?: mutableListOf()
-        oldValue.set(position, item)
-        this.value = oldValue
     }
 }

@@ -6,8 +6,8 @@ import com.example.innovateapprecruitmenttest.model.TodoListItem
 import com.example.innovateapprecruitmenttest.model.api.TodoAPI
 import com.example.innovateapprecruitmenttest.model.room.TodoDao
 import com.example.innovateapprecruitmenttest.utils.apiRequestError
-import com.example.innovateapprecruitmenttest.utils.handleResult
-import io.reactivex.disposables.CompositeDisposable
+import com.example.innovateapprecruitmenttest.utils.formatTo
+import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.time.LocalDateTime
 import java.time.ZoneId
@@ -88,12 +88,8 @@ class TodoRepositoryImpl(
             params["priority"] = todo.priority
             todo.description?.let { params["description"] = todo.description }
             todo.deadlineAt?.let {
-                val date = Date(todo.deadlineAt)
-                val timeZone = TimeZone.getTimeZone("UTC")
-                val dateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm'Z'")
-                dateFormat.timeZone = timeZone
-                val newdate = dateFormat.format(date)
-                params["deadline_at"] = newdate
+                val date = Date(todo.deadlineAt).formatTo("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
+                params["deadline_at"] = date
             }
             val apiRequest = todoApi.updateTodo(API_KEY, id, params)
             if (apiRequest.isSuccessful) {
@@ -130,6 +126,4 @@ class TodoRepositoryImpl(
         Log.i("Deleting todo result:", "Error:::${error.message}")
         false
     }
-
-
 }

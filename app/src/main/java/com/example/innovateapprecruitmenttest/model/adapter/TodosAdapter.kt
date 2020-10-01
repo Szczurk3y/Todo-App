@@ -34,7 +34,7 @@ class TodosAdapter(private val onClick: (item: TodoListItem, position: Int, view
 
             tvDeadline.text = if (item.deadlineAt != null) {
                 val date = Date(item.deadlineAt)
-                val sdf = SimpleDateFormat("yyyy-MM-dd")
+                val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
                 sdf.format(date)
             } else {
                 "Add deadline"
