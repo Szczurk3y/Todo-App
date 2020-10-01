@@ -22,8 +22,8 @@ class AddEditTodoViewModel: ViewModel() {
 
     var title = ObservableField<String>("")
     var description = ObservableField<String>("")
+    var deadline = ObservableField<Long>()
     var priority = false
-    var deadline: Date? = null
 
     var todo: TodoListItem? = null
 
@@ -36,8 +36,7 @@ class AddEditTodoViewModel: ViewModel() {
                 title = title.get()!!,
                 description = description.get()!!,
                 priority = priority,
-                deadlineAt = null
-//                deadlineAt = todo?.deadlineAt
+                deadlineAt = deadline.get()!!
             )
             todoLiveData.postValue(newTodo)
         } else {
@@ -59,6 +58,6 @@ class AddEditTodoViewModel: ViewModel() {
         title.set(oldTodo.title)
         description.set(oldTodo.description)
         priority = oldTodo.priority
-        deadline = oldTodo.deadlineAt
+        deadline.set(oldTodo.deadlineAt)
     }
 }

@@ -8,6 +8,12 @@ import com.example.innovateapprecruitmenttest.model.room.TodoDao
 import com.example.innovateapprecruitmenttest.utils.apiRequestError
 import com.example.innovateapprecruitmenttest.utils.handleResult
 import io.reactivex.disposables.CompositeDisposable
+import java.text.SimpleDateFormat
+import java.time.LocalDateTime
+import java.time.ZoneId
+import java.time.format.DateTimeFormatter
+import java.util.*
+import kotlin.collections.HashMap
 
 
 // Injected in AppModule
@@ -22,12 +28,16 @@ class TodoRepositoryImpl(
         val cachedTodos = todoDao.getSavedTodos()
         val apiTodos = try { // apiTodo returns RawTodo, so we must transform it to TodoListItem as follows:
             todoApi.getAllTodos(API_KEY).todos.map {
+                Log.i("Todo deadline", it.deadlineAt.toString())
+                val parsedDate = LocalDateTime.parse(it.deadlineAt, DateTimeFormatter.ISO_OFFSET_DATE_TIME)
+                val zonedTime = parsedDate.atZone(ZoneId.of("Europe/Warsaw"))
+                val milis = zonedTime.toInstant().toEpochMilli()
                 TodoListItem(
                     it.id,
                     it.title,
                     it.description,
                     it.priority,
-                    it.deadlineAt
+                    milis
                 )
             }
         } catch (error: Throwable) {
@@ -77,7 +87,14 @@ class TodoRepositoryImpl(
             params["title"] = todo.title
             params["priority"] = todo.priority
             todo.description?.let { params["description"] = todo.description }
-            todo.deadlineAt?.let { params["deadline_at"] = todo.deadlineAt }
+            todo.deadlineAt?.let {
+                val date = Date(todo.deadlineAt)
+                val timeZone = TimeZone.getTimeZone("UTC")
+                val dateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm'Z'")
+                dateFormat.timeZone = timeZone
+                val newdate = dateFormat.format(date)
+                params["deadline_at"] = newdate
+            }
             val apiRequest = todoApi.updateTodo(API_KEY, id, params)
             if (apiRequest.isSuccessful) {
                 val updatedTodo = TodoListItem(

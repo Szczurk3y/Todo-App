@@ -10,7 +10,7 @@ data class RawTodo (
     val id: String,
     val title: String,
     val description: String?,
-    @Json(name = "deadline_at") val deadlineAt: Date?,
+    @Json(name = "deadline_at") val deadlineAt: String?,
     val completed: Boolean,
     @Json(name = "completed_at") val completedAt: String?,
     val priority: Boolean,

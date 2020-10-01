@@ -15,6 +15,7 @@ import com.example.innovateapprecruitmenttest.viewmodel.AddEditTodoViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import com.example.innovateapprecruitmenttest.databinding.ContentAddedittodoBinding
 import kotlinx.android.synthetic.main.content_addedittodo.*
+import java.util.*
 
 class AddEditTodoActivity: AppCompatActivity(R.layout.activity_addedittodo) {
 
@@ -26,16 +27,26 @@ class AddEditTodoActivity: AppCompatActivity(R.layout.activity_addedittodo) {
 
         binding = DataBindingUtil.setContentView(this, R.layout.content_addedittodo)
         binding.viewmodel = viewmodel
+        binding.also {
+            it.calendar.setOnDateChangeListener { view, year, month, dayOfMonth ->
+                val instance = Calendar.getInstance()
+                instance.set(year, month, dayOfMonth)
+                view.date = instance.timeInMillis
+                Log.i("Picked date:", view.date.toString())
+                viewmodel.deadline.set(view.date)
+            }
+        }
 
         val todoToUpdate = intent.getParcelableExtra<TodoListItem>(RawTodo.TODO_KEY)
 
         if (todoToUpdate != null) {
             et_title.hint = todoToUpdate.title
             et_description.hint = todoToUpdate.description
-            // TODO: set date to deadline
-            calendar.setDate(10000, true, false)
+            todoToUpdate.deadlineAt?.let { calendar.setDate(todoToUpdate.deadlineAt, true, false) }
             viewmodel.initTodo(todoToUpdate)
             Log.i("Date:", calendar.date.toString())
+        } else {
+            viewmodel.deadline.set(calendar.date)
         }
 
         viewmodel.todoLiveData.observe(this, Observer {

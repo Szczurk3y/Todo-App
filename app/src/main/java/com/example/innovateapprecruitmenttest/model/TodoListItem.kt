@@ -15,5 +15,5 @@ data class TodoListItem (
     val title: String,
     val description: String?,
     val priority: Boolean,
-    @Json(name = "deadline_at") val deadlineAt: Date?
+    @Json(name = "deadline_at") val deadlineAt: Long?
 ): Parcelable

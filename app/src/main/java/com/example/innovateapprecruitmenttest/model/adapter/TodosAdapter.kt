@@ -9,6 +9,8 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.innovateapprecruitmenttest.R
 import com.example.innovateapprecruitmenttest.model.TodoListItem
+import java.text.SimpleDateFormat
+import java.util.*
 
 class TodosAdapter(private val onClick: (item: TodoListItem, position: Int, view: View) -> Unit): ListAdapter<TodoListItem, TodosAdapter.ViewHolder>(DIFF_CALLBACK) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -30,7 +32,13 @@ class TodosAdapter(private val onClick: (item: TodoListItem, position: Int, view
             val tvTitle: TextView = findViewById(R.id.tv_item_title)
             val tvDescription: TextView = findViewById(R.id.tv_item_description)
 
-            tvDeadline.text = item.deadlineAt.toString() ?: "Add deadline"
+            tvDeadline.text = if (item.deadlineAt != null) {
+                val date = Date(item.deadlineAt)
+                val sdf = SimpleDateFormat("yyyy-MM-dd")
+                sdf.format(date)
+            } else {
+                "Add deadline"
+            }
             tvTitle.text = item.title
             tvDescription.text = item.description ?: "Add description"
 
