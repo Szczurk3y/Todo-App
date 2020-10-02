@@ -6,9 +6,7 @@ import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import android.view.Menu
-import android.view.MenuInflater
 import android.view.MenuItem
-import android.widget.CheckBox
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -17,6 +15,7 @@ import androidx.recyclerview.widget.ItemTouchHelper.RIGHT
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.innovateapprecruitmenttest.R
+import com.example.innovateapprecruitmenttest.model.OrderBy
 import com.example.innovateapprecruitmenttest.model.adapter.TodosAdapter
 import com.example.innovateapprecruitmenttest.model.RawTodo
 import com.example.innovateapprecruitmenttest.model.TodoListItem
@@ -128,8 +127,16 @@ class AllTodosActivity: AppCompatActivity(R.layout.activity_alltodos), KoinCompo
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
-            R.id.action_delete -> {
-                Toast.makeText(this, "Delete all clicked", Toast.LENGTH_SHORT).show()
+            R.id.action_order_by_deadline -> {
+                viewmodel.orderTodosBy(OrderBy.DEADLINE)
+                true
+            }
+            R.id.action_order_by_title -> {
+                viewmodel.orderTodosBy(OrderBy.TITLE)
+                true
+            }
+            R.id.action_order_by_insertion -> {
+                viewmodel.orderTodosBy(OrderBy.INSERTION)
                 true
             }
             else -> super.onOptionsItemSelected(item)

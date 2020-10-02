@@ -4,21 +4,32 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.innovateapprecruitmenttest.di.API_KEY
 import com.example.innovateapprecruitmenttest.domain.repository.TodoRepository
+import com.example.innovateapprecruitmenttest.model.OrderBy
 import com.example.innovateapprecruitmenttest.model.TodoListItem
+import com.example.innovateapprecruitmenttest.model.api.TodoAPI
 import com.example.innovateapprecruitmenttest.utils.addNewItem
 import com.example.innovateapprecruitmenttest.utils.deleteItemAt
 import com.example.innovateapprecruitmenttest.utils.handleResult
 import com.example.innovateapprecruitmenttest.utils.updateItemAt
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.schedulers.Schedulers
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.launch
+import java.time.LocalDateTime
+import java.time.ZoneId
+import java.time.format.DateTimeFormatter
 
 class AllTodosViewModel(
     private val todoRepository: TodoRepository,
+    private val todoApi: TodoAPI,
     val todosLiveData: MutableLiveData<MutableList<TodoListItem>>
 ): ViewModel() {
 
     val saveLiveData = MutableLiveData<Boolean>()
+    val disposables = CompositeDisposable()
 
     private val coroutineExceptionHandler = CoroutineExceptionHandler { coroutineContext, throwable ->
         throwable.printStackTrace()
@@ -68,11 +79,44 @@ class AllTodosViewModel(
         }
     }
 
+    fun orderTodosBy(parameter: String) {
+        val queryMap = HashMap<String, String>()
+        queryMap["order_by"] = parameter
+        val orderedTodos = todoApi.orderTodosBy(API_KEY, queryMap)
+            .filter {
+                (200..300).contains(it.code())
+            }
+            .map {
+                it.body()?.todos?.map { rawtodo ->
+                    val parsedDate = LocalDateTime.parse(rawtodo.deadlineAt, DateTimeFormatter.ISO_OFFSET_DATE_TIME)
+                    val zonedTime = parsedDate.atZone(ZoneId.of("Europe/Warsaw"))
+                    val milis = zonedTime.toInstant().toEpochMilli()
+                    TodoListItem(
+                        rawtodo.id,
+                        rawtodo.title,
+                        rawtodo.description,
+                        rawtodo.priority,
+                        milis
+                    )
+                }
+            }
+        disposables.add(orderedTodos.subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe { todos ->
+                todosLiveData.value = todos?.toMutableList()
+            })
+    }
+
     fun restoreTodos() {
         Log.i("Restored todos", todosLiveData.value.toString()) // just to check if it actually works
     }
 
     fun initTodos(list: MutableList<TodoListItem>) {
         todosLiveData.postValue(list)
+    }
+
+    override fun onCleared() {
+        disposables.dispose()
+        super.onCleared()
     }
 }

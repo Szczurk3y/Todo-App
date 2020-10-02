@@ -15,6 +15,6 @@ import org.koin.dsl.module
 fun viewModelModule() = module {
     single { MutableLiveData<MutableList<TodoListItem>>() } // All todos
     viewModel { SplashViewModel(get()) }
-    viewModel { AllTodosViewModel(get(), get()) }
+    viewModel { AllTodosViewModel(get(), get(), get()) }
     viewModel { AddEditTodoViewModel() }
 }
