@@ -82,7 +82,6 @@ class AddEditTodoActivity: AppCompatActivity(R.layout.activity_addedittodo), Koi
         checkbox?.let { checkBox ->
             checkBox.isChecked = viewmodel.priority.get()!!
             item.isChecked = viewmodel.priority.get()!!
-            Log.i("Viewmodel checkbox status", viewmodel.priority.get()!!.toString())
             Log.i("Item checkbox status", viewmodel.priority.get()!!.toString())
             item.let {menuItem ->
                 checkBox.setOnClickListener {
@@ -100,7 +99,6 @@ class AddEditTodoActivity: AppCompatActivity(R.layout.activity_addedittodo), Koi
                 item.isChecked = !item.isChecked
                 viewmodel.priority.set(item.isChecked)
                 Log.i("Checkbox status", item.isChecked.toString())
-                Log.i("Viewmodel checkbox status", viewmodel.priority.get()!!.toString())
                 true
             }
             else -> false

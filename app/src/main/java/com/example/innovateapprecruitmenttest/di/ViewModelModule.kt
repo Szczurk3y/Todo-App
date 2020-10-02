@@ -8,12 +8,9 @@ import com.example.innovateapprecruitmenttest.viewmodel.SplashViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
-/**
- * Creates viewmodels for the app
- */
 
+//  Creates viewmodels for the app
 fun viewModelModule() = module {
-    single { MutableLiveData<MutableList<TodoListItem>>() } // All todos
     viewModel { SplashViewModel(get()) }
     viewModel { AllTodosViewModel(get(), get(), get()) }
     viewModel { AddEditTodoViewModel() }

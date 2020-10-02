@@ -5,7 +5,6 @@ import androidx.room.*
 import com.example.innovateapprecruitmenttest.model.TodoListItem
 
 @Database(entities = [TodoListItem::class], version = 1, exportSchema = false)
-@TypeConverters(DateConverter::class)
 abstract class TodosDatabase: RoomDatabase() {
     abstract fun todoDao(): TodoDao
 
