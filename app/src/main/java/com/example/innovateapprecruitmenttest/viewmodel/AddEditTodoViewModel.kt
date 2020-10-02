@@ -23,7 +23,7 @@ class AddEditTodoViewModel: ViewModel() {
     var title = ObservableField<String>("")
     var description = ObservableField<String>("")
     var deadline = ObservableField<Long>()
-    var priority = ObservableField<Boolean>(false)
+    var priority = ObservableField<Boolean>()
 
     var todo: TodoListItem? = null
 

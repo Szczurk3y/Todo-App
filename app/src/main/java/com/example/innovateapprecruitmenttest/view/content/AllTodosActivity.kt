@@ -6,7 +6,9 @@ import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import android.view.Menu
+import android.view.MenuInflater
 import android.view.MenuItem
+import android.widget.CheckBox
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -120,17 +122,14 @@ class AllTodosActivity: AppCompatActivity(R.layout.activity_alltodos), KoinCompo
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu_main, menu)
-        return true
+
+        return super.onCreateOptionsMenu(menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.action_delete -> {
                 Toast.makeText(this, "Delete all clicked", Toast.LENGTH_SHORT).show()
-                true
-            }
-            R.id.action_priority -> {
-                Toast.makeText(this, "Star", Toast.LENGTH_SHORT).show()
                 true
             }
             else -> super.onOptionsItemSelected(item)

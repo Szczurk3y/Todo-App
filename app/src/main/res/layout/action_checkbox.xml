@@ -3,4 +3,5 @@
     style="@style/StarCheckbox"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:padding="8dp" />
+    android:padding="8dp"
+    android:id="@+id/action_item_checkbox"/>

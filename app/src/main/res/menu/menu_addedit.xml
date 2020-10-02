@@ -4,9 +4,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="com.example.innovateapprecruitmenttest.view.content.AddEditTodoActivity">
     <item
-        android:id="@+id/action_priority"
-        android:checkable="true"
+        android:id="@+id/menu_action_priority"
         android:title="@string/action_priority"
-        app:actionLayout="@layout/layout_star"
-        app:showAsAction="ifRoom|withText" />
+        android:orderInCategory="100"
+        app:showAsAction="ifRoom"
+        android:checkable="true"
+        android:checked="false"
+        app:actionLayout="@layout/action_checkbox"
+        />
 </menu>

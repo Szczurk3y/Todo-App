@@ -51,7 +51,6 @@ class AddEditTodoActivity: AppCompatActivity(R.layout.activity_addedittodo), Koi
             et_description.hint = todoToUpdate.description
             todoToUpdate.deadlineAt?.let { calendar.setDate(todoToUpdate.deadlineAt, true, false) }
             viewmodel.initTodo(todoToUpdate)
-            Log.i("Date:", calendar.date.toString())
         } else {
             viewmodel.deadline.set(calendar.date)
         }
@@ -77,15 +76,30 @@ class AddEditTodoActivity: AppCompatActivity(R.layout.activity_addedittodo), Koi
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu_addedit, menu)
+        val item = menu?.findItem(R.id.menu_action_priority)
+        val checkbox = item?.actionView?.findViewById<CheckBox>(R.id.action_item_checkbox)
+        checkbox?.let { checkBox ->
+            checkBox.isChecked = viewmodel.priority.get()!!
+            item.isChecked = viewmodel.priority.get()!!
+            Log.i("Viewmodel checkbox status", viewmodel.priority.get()!!.toString())
+            Log.i("Item checkbox status", viewmodel.priority.get()!!.toString())
+            item.let {menuItem ->
+                checkBox.setOnClickListener {
+                    onOptionsItemSelected(menuItem)
+                }
+            }
+        }
+
         return super.onCreateOptionsMenu(menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        Toast.makeText(this, "elo", Toast.LENGTH_SHORT).show()
         return when(item.itemId) {
-            R.id.action_priority -> {
+            R.id.menu_action_priority -> {
                 item.isChecked = !item.isChecked
                 viewmodel.priority.set(item.isChecked)
+                Log.i("Checkbox status", item.isChecked.toString())
+                Log.i("Viewmodel checkbox status", viewmodel.priority.get()!!.toString())
                 true
             }
             else -> false
