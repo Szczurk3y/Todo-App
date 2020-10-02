@@ -53,6 +53,7 @@ class AddEditTodoActivity: AppCompatActivity(R.layout.activity_addedittodo), Koi
             viewmodel.initTodo(todoToUpdate)
         } else {
             viewmodel.deadline.set(calendar.date)
+            viewmodel.priority.set(false)
         }
 
         viewmodel.todoLiveData.observe(this, Observer {
