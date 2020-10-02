@@ -64,8 +64,6 @@ class AllTodosActivity: AppCompatActivity(R.layout.activity_alltodos), KoinCompo
 
         if (!splashLoadedTodos.isNullOrEmpty()) {
             viewmodel.initTodos(splashLoadedTodos)
-        } else {
-            viewmodel.restoreTodos()
         }
 
         fab.setOnClickListener {

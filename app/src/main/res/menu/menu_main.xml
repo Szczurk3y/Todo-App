@@ -9,12 +9,12 @@
         app:showAsAction="never" />
     <item
         android:id="@+id/action_order_by_title"
-        android:orderInCategory="100"
+        android:orderInCategory="200"
         android:title="@string/order_by_title_text"
         app:showAsAction="never" />
     <item
         android:id="@+id/action_order_by_insertion"
-        android:orderInCategory="100"
+        android:orderInCategory="300"
         android:title="@string/order_by_insertion_text"
         app:showAsAction="never" />
 </menu>

@@ -42,10 +42,14 @@ class AllTodosViewModel(
                     updatedTodo?.let {
                         val pos = todosLiveData.value?.map { it.id }?.indexOf(it.id)
                         Log.i("Item position:", pos.toString())
-                        pos?.let { todosLiveData.updateItemAt(pos, updatedTodo) }
+                        pos?.let {
+                            todosLiveData.updateItemAt(pos, updatedTodo)
+                            saveLiveData.postValue(true)
+                        }
                     }
                     Log.i("Updating todo result", "Successfully updated todo")
                 }.onFailure {error ->
+                    saveLiveData.postValue(false)
                     handleResult("Updating todo result", "Error:::${error.message}")
                 }
         }
@@ -105,10 +109,6 @@ class AllTodosViewModel(
             .subscribe { todos ->
                 todosLiveData.value = todos?.toMutableList()
             })
-    }
-
-    fun restoreTodos() {
-        Log.i("Restored todos", todosLiveData.value.toString()) // just to check if it actually works
     }
 
     fun initTodos(list: MutableList<TodoListItem>) {

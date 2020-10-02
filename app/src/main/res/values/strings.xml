@@ -16,4 +16,5 @@
     <string name="order_by_deadline_text">Order by deadline</string>
     <string name="order_by_title_text">Order by title</string>
     <string name="order_by_insertion_text">Order by insertion (default)</string>
+    <string name="filter_by_priority_text">Filter by priority</string>
 </resources>

@@ -22,7 +22,6 @@ interface TodoAPI {
     suspend fun updateTodo(@Header("Authorization") token: String, @Path("id") id: String, @QueryMap options: Map<String, Any>): Response<BaseTodoResponse>
 
     // Now RxKotlin comes to action! :] (Kotlin coroutines doesn't support Observable return type)
-
     @GET(".")
     fun orderTodosBy(@Header("Authorization") token: String, @QueryMap options: Map<String, String>): Observable<Response<TodoListResponse>>
 }
