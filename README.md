@@ -1,7 +1,7 @@
 # Todo App
 Fully written in Kotlin. 
 For caching data I use room pattern, therefore if user opens an app it will download todos from cache.
-I implemented api requests basically using kotlin coroutines and RxKotlin.
+I implemented api requests basically using kotlin coroutines and RxKotlin library.
 App's architecture is MVVM with Koin as dependency injection.
 
 # Delete
