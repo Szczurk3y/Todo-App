@@ -5,10 +5,10 @@ I implemented api requests basically using kotlin coroutines and RxKotlin librar
 App's architecture is MVVM with Koin as dependency injection.
 
 # Delete
-swipe item left/right
+swipe item to left/right
 
 # Add
-click floating button 
+click on floating button 
 
 # Update
 click on existing item
