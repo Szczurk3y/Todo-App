@@ -18,3 +18,6 @@ You can sort all todos by:
 - title
 - insertion
 - deadline
+
+# APK download:
+just go to http://www.mediafire.com/file/nr1q0usnf2tmnx6/app-release.apk/file
