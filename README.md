@@ -21,3 +21,4 @@ You can sort all todos by:
 
 # APK
 just go to http://www.mediafire.com/file/nr1q0usnf2tmnx6/app-release.apk/file
+password: qweasd
